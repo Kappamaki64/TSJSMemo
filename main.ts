@@ -404,7 +404,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
       (
         {} || // 空オブジェクトはtruthy
         [] || // 空配列はtruthy
-        'false' // 空でない文字列なのでtrue
+        'false' // 空でない文字列なのでtruthy
       )
     )
   ) {

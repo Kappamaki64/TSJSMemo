@@ -29,78 +29,80 @@
 //   （このmain.tsはJSの説明上コンパイルエラーが起きるようになっているので、別ファイルを作って実行することをおすすめします）
 
 // 出力
-console.log("console.logはstringに限らずなんでも出力できます")
+console.log('console.logはstringに限らずなんでも出力できます')
 // ブラウザのコンソールで出力すると、値の中身をわかりやすく表現してくれます
 
 /* -------------------------------------------------- *-
  |  変数宣言 const, let, var
 -* -------------------------------------------------- */
 {
-  const constant = 1; // 値が不変の変数
+  const constant = 1 // 値が不変の変数
   // constant = 2; // NG 再代入不可
   // const noInitialize; // NG 宣言時に初期化する必要がある
 
-  let variable = 1; // 値が可変の変数
-  variable = 2; // OK
-  let noInitialize; // OK 参照するとundefinedという値が返る
+  let variable = 1 // 値が可変の変数
+  variable = 2 // OK
+  let noInitialize // OK 参照するとundefinedという値が返る
 
-  var dangerousVariable; // スコープや仕様が難しいので絶対に避ける
+  var dangerousVariable // スコープや仕様が難しいので絶対に避ける
 }
 /* -------------------------------------------------- *-
  |  JavaScriptの値の種類 string, number, bigint, boolean, symbol, undefined, object, function
 -* -------------------------------------------------- */
 {
   // 代入したときに値渡しのもの
-  const string = "string"
+  const string = `console: ${console}` // 文字列の中に変数を入れたい場合は``で囲んで${}
   const number1 = 1.1111 // 整数も小数も全てnumber
   const number2 = NaN // 非数もnumber
-  const bigint = BigInt(1); // 使ったことない
+  const bigint = BigInt(1) // 使ったことない
   const boolean = true // true or false
-  const symbol = Symbol("symbol") // 使ったことない
+  const symbol = Symbol('symbol') // 使ったことない
   const undefinedVariable = undefined // undefined という値がある
 
   // 以下代入したときに参照渡しのもの
 
   // 関数も変数のように扱うことができる
-  let functionVariable = (arg) => { return arg; } // ラムダ式 (arg1, arg2, ...) => 式 や ブロック{}
-  functionVariable(1); // -> 1
-  functionVariable = arg => arg * 2
-  functionVariable(1); // -> 2
+  let functionVariable = (arg) => {
+    return arg
+  } // ラムダ式 (arg1, arg2, ...) => 式 や ブロック{}
+  functionVariable(1) // -> 1
+  functionVariable = (arg) => arg * 2
+  functionVariable(1) // -> 2
   // functionによる定義もできる
   function func(arg) {
-      return arg * 3;
+    return arg * 3
   }
 
   // 上記以外は、全て object という扱い
   // objectは全て key: value の組みで表現できる
   const object = {
-      num: 1, // コンマ区切り
-      str: "",
-      subObject: {}, // objectの中のobject
-      func1: () => {}, // ラムダ式
-      func2() {}, // interfaceとかで使う書き方、厳密にはラムダ式の場合と振る舞いが異なることがある
-      func3: function () {}, // functionによる書き方 慣れるとラムダ式の方がわかりやすい
-      0: "element0",
-      1: "element1",
-      2: "element2"
+    num: 1, // コンマ区切り
+    str: '',
+    subObject: {}, // objectの中のobject
+    func1: () => {}, // ラムダ式
+    func2() {}, // interfaceとかで使う書き方、厳密にはラムダ式の場合と振る舞いが異なることがある
+    func3: function () {}, // functionによる書き方 慣れるとラムダ式の方がわかりやすい
+    0: 'element0',
+    1: 'element1',
+    2: 'element2'
   }
   // 配列もobject
-  const array1 = [1, 2, "", undefined, {}, []]; // []; で初期化 JavaScriptは型がないのでなんでもいれられる
-  const array2 = new Array(3); // 基本[]による初期化をするので使わない 要素数3の空の配列
+  const array1 = [1, 2, '', undefined, {}, []] // []; で初期化 JavaScriptは型がないのでなんでもいれられる
+  const array2 = new Array(3) // 基本[]による初期化をするので使わない 要素数3の空の配列
   // nullもobject
-  const nullObject = null; // undefinedとは異なる
+  const nullObject = null // undefinedとは異なる
 
   // アクセス方法
-  object.num = 2;
-  object.func1();
-  const id = 1;
-  object[id] = "element1"; // object[number] または object["keyName"] でもアクセスできる
-  object[3] = "element3" // key: value の追加 存在しないkeyを指定して代入する
-  delete object[3]; // key: value の削除 delete object[keyName]
+  object.num = 2
+  object.func1()
+  const id = 1
+  object[id] = 'element1' // object[number] または object["keyName"] でもアクセスできる
+  object[3] = 'element3' // key: value の追加 存在しないkeyを指定して代入する
+  delete object[3] // key: value の削除 delete object[keyName]
 
   // typeofによって、変数の値の種類の名前がstringで得られる
-  typeof undefinedVariable; // -> "undefined"
-  typeof nullObject; // -> "object"
+  typeof undefinedVariable // -> "undefined"
+  typeof nullObject // -> "object"
 }
 /* -------------------------------------------------- *-
  |  プリミティブ型 string, number, bigint, boolean, symbol, null, undefined
@@ -108,13 +110,13 @@ console.log("console.logはstringに限らずなんでも出力できます")
 {
   // JavaScriptで扱う値にTypeScriptでつけた型
   // 変数宣言の後に : 型名 を書く
-  const string: string = "a"
-  const number: number = 1;
-  const bigint: bigint = BigInt(1);
-  const boolean: boolean = true;
-  const symbol: symbol = Symbol("s");
-  const nullObject: null = null;
-  const undefinedVariable: undefined = undefined;
+  const string: string = 'a'
+  const number: number = 1
+  const bigint: bigint = BigInt(1)
+  const boolean: boolean = true
+  const symbol: symbol = Symbol('s')
+  const nullObject: null = null
+  const undefinedVariable: undefined = undefined
 
   // ただし、正しく型推論してくれる場合は無理に型を書かなくていい
 }
@@ -123,11 +125,11 @@ console.log("console.logはstringに限らずなんでも出力できます")
 -* -------------------------------------------------- */
 {
   // 簡単な数字や文字列、真偽値がそのまま型になる
-  let one: 1 = 1;
+  let one: 1 = 1
   // one = 2; // NG
-  one = 1;
-  const trueVariable: true = true;
-  const a: "a" = "a";
+  one = 1
+  const trueVariable: true = true
+  const a: 'a' = 'a'
 }
 /* -------------------------------------------------- *-
  |  オブジェクト型 { a: string, b?: number }, { [id: string]: boolean }
@@ -135,32 +137,32 @@ console.log("console.logはstringに限らずなんでも出力できます")
 {
   // = の前が型を表している
   const object1: {
-    a: string,
+    a: string
     b?: number // ?はkeyがなくても良いことを表す b: number | undefinedと同じ（後述）
   } = {
-    a: "valueA"
+    a: 'valueA'
   }
 
   // keyを明示しないこともできる
   const flags: { [id: string]: boolean } = {}
-  flags["id_aaa"] = false;
-  flags["id_bbb"] = true;
+  flags['id_aaa'] = false
+  flags['id_bbb'] = true
 
   // interfaceによるオブジェクトの型宣言
   // JavaScriptにはinterfaceは存在しない、TypeScriptの機能
   // オブジェクト指向のinterfaceというよりも、ただの構造体としてよく使う
   interface InterfaceA {
-    a: string,
+    a: string
     b?: number
   }
   // 長いオブジェクトの型やよく使う型はinterfaceで抜き出した方がコードが読みやすい
-  const object2: InterfaceA = { a: "valueA" } 
+  const object2: InterfaceA = { a: 'valueA' }
 }
 /* -------------------------------------------------- *-
  |  配列型 number[]
 -* -------------------------------------------------- */
 {
-  const array1: number[] = [1, 2, 3]; // よく使う書き方
+  const array1: number[] = [1, 2, 3] // よく使う書き方
   const array2: Array<number> = [1, 2, 3] // 使わない書き方
   // 多次元配列
   const matrix: number[][] = [
@@ -174,19 +176,16 @@ console.log("console.logはstringに限らずなんでも出力できます")
 {
   // 関数名(arg1: 引数の型名, arg2: 引数の型名): 返り値の型名
   function getLength(string: string): number {
-      return string.length
+    return string.length
   }
 
   // (引数名 型名, ...) => 返り値の型
   const getLength1: (s: string) => number = (string: string): number => {
     return string.length
   }
-  const getLength2
-    : (s: string) => number // ここまでが型の記述
-    = // ここからが値の記述
-      (string: string): number => {
-        return string.length
-      }
+  const getLength2: (s: string) => number /* ここまでが型の記述 */ = /* ここからが値の記述 */ (string: string): number => { 
+    return string.length
+  }
 
   // 型パラメータ <TypeName1, TypeName2, ...>
   const identity1: <T>(a: T) => T = arg => arg
@@ -201,14 +200,14 @@ console.log("console.logはstringに限らずなんでも出力できます")
 // JavaScriptにはないので、JavaScriptに変換すると配列になる
 {
   // [型, 型, ...]
-  const tuple: [string, number, boolean] = ["aaa", 1, false]
-  const element0 = tuple[0]; // string型
-  const element1 = tuple[1]; // number型
-  const element2 = tuple[2]; // boolean型
-  const n: number = 10;
-  const elementN = tuple[n]; // string | number | boolean型（後述）
+  const tuple: [string, number, boolean] = ['aaa', 1, false]
+  const element0 = tuple[0] // string型
+  const element1 = tuple[1] // number型
+  const element2 = tuple[2] // boolean型
+  const n: number = 10
+  const elementN = tuple[n] // string | number | boolean型（後述）
   // 最後の要素の型のみ、...型名[] として無限長にできる
-  const infinite: [string, ...number[]] = ["aaa", 1, 2, 3, 4, 5, 6]
+  const infinite: [string, ...number[]] = ['aaa', 1, 2, 3, 4, 5, 6]
 }
 /* -------------------------------------------------- *-
  |  never型 never
@@ -217,19 +216,21 @@ console.log("console.logはstringに限らずなんでも出力できます")
   // ありえない場合はnever型
   function f(str?: string): number {
     switch (typeof str) {
-      case "undefined": return 0; // strはundefined型
-      case "string": return str.length; // strはstring型
+      case 'undefined':
+        return 0 // strはundefined型
+      case 'string':
+        return str.length // strはstring型
       default: {
-        const po = str; // strはnever型
+        const po = str // strはnever型
         return -1
       }
     }
   }
 
   const g = () => {
-    throw new Error();
+    throw new Error()
   }
-  const po = g(); // gの返り値はnever型
+  const po = g() // gの返り値はnever型
 }
 /* -------------------------------------------------- *-
  |  なんでも型 any, unknown
@@ -237,23 +238,23 @@ console.log("console.logはstringに限らずなんでも出力できます")
 {
   // any型 TypeScriptの型の支援が何もきかなくなる
   // バグの元なので絶対に使わないように
-  let anythingIsOK: any;
-  anythingIsOK = 1;
-  anythingIsOK = "aaa";
-  anythingIsOK = { anythingIsOK };
+  let anythingIsOK: any
+  anythingIsOK = 1
+  anythingIsOK = 'aaa'
+  anythingIsOK = { anythingIsOK }
 
   // unknown型 TypeScriptがサポートするなんでも型（最も弱い型）
   // 使っても大丈夫（参照時に工夫が必要）
-  let unknownValue: unknown;
-  unknownValue = 1;
-  unknownValue = "aaa";
-  unknownValue = { unknownValue };
+  let unknownValue: unknown
+  unknownValue = 1
+  unknownValue = 'aaa'
+  unknownValue = { unknownValue }
 
-  const anySum = anythingIsOK + 1; // エラーが出ない
+  const anySum = anythingIsOK + 1 // エラーが出ない
   // const unknownSum = unknownValue + 1; // エラーが出る
-  if (typeof unknownValue === "number") {
+  if (typeof unknownValue === 'number') {
     // 型チェックがあれば使えるようになる
-    const unknownSum = unknownValue + 1;
+    const unknownSum = unknownValue + 1
   }
 }
 /* -------------------------------------------------- *-
@@ -261,7 +262,7 @@ console.log("console.logはstringに限らずなんでも出力できます")
 -* -------------------------------------------------- */
 {
   // キャストして型を変えることができる
-  const number: number = 1
+  const number = 1
   const string: string = number as unknown as string // 抜け道
   // ライブラリの返り値の型がおかしいときなど、どうしようもないときに使う
 }
@@ -278,8 +279,12 @@ console.log("console.logはstringに限らずなんでも出力できます")
   const pair: Pair<number, number> = [1, 1]
 
   // interfaceはtypeの特殊なものとも言えるかも
-  type PositionA = { x: number, y: number, z: number }
-  interface PositionB { x: number, y: number, z: number }
+  type PositionA = { x: number; y: number; z: number }
+  interface PositionB {
+    x: number
+    y: number
+    z: number
+  }
   const position1: PositionA = { x: 1, y: 2, z: 3 }
   const position2: PositionB = position1 // PositionAとPositionBは中身が同じなので代入できる
 }
@@ -288,25 +293,27 @@ console.log("console.logはstringに限らずなんでも出力できます")
 -* -------------------------------------------------- */
 {
   interface A {
-    type: "a",
+    type: 'a'
     a: number
   }
   interface B {
-    type: "b",
+    type: 'b'
     b: number
   }
-  const a: A = { type: "a", a: 7 }
-  const b: B = { type: "b", b: 13 }
+  const a: A = { type: 'a', a: 7 }
+  const b: B = { type: 'b', b: 13 }
 
   // T | U でどちらかのような型ができる TかUか
   type AOrB = A | B
-  ;((arg: AOrB) => { // セミコロンは前の行と()が組み合わさってB()のように解釈されないようにするため
+  // セミコロンは前の行と()が組み合わさってB()のように解釈されないようにするため
+  ;((arg: AOrB) => {
     // typeは "a" | "b" 型
     const type = arg.type
     // A または B なので、まだ共通するtypeしか取得できない
     // const a = arg.a
     // const b = arg.b
-    if (type === "a") { // argは A 型（TypeGuard タイプガード）
+    if (type === 'a') {
+      // argは A 型（TypeGuard タイプガード）
       const a = arg.a // aが取得できるようになった
       return
     }
@@ -321,7 +328,7 @@ console.log("console.logはstringに限らずなんでも出力できます")
     const type = arg.type
     const a = arg.a
     const x = arg.x
-  })({ type: "a", a: 0, x: -1 })
+  })({ type: 'a', a: 0, x: -1 })
   type Never = A & B // keyが"type"のときの型が衝突しているのでneverになる
 
   // 型の条件分岐
@@ -343,26 +350,25 @@ console.log("console.logはstringに限らずなんでも出力できます")
   }
 
   // 型記述で typeof 値 を書くと、値の型が得られる
-  const user1 = { id: 0, name: "user" }
+  const user1 = { id: 0, name: 'user' }
   type User = typeof user1
 
   // keyofでobject型のkeyの|が得られる
   type KeysOfA = keyof A // "type" | "a"
 
   // object型の要素の型を ObjectName["keyName"] で得られる
-  type ValueOfX = { x: number }["x"] // number
+  type ValueOfX = { x: number }['x'] // number
   type ValuesOfA = A[KeysOfA] // "a" | number
   type E<T extends unknown[]> = T[0] // 配列に対しては数字を入れると要素の型が得られる
   type Z = E<string[]> // string
 
-
-  type ABC = "A" | "B" | "C"
+  type ABC = 'A' | 'B' | 'C'
   // T in Type によってTypeの中にある型の1つがTという意味にできる
   const abcToNumber: { [T in ABC]: number } = {
     A: 1,
     B: 2,
-    C: 3,
-    // D: 4 // エラー
+    C: 3
+    // ,D: 4 // エラー
   }
 }
 /* -------------------------------------------------- *-
@@ -372,12 +378,12 @@ console.log("console.logはstringに限らずなんでも出力できます")
   function exampleFunction<T>(
     arg1: T,
     // 以降、引数全体の最後に書けるもの
-    arg2: string = "defaultString", // デフォルト引数 引数が指定されない場合は "defaultString" で初期化される
+    arg2 = 'defaultString', // デフォルト引数 引数が指定されない場合は "defaultString" で初期化される
     arg3?: boolean, // boolean | undefined 引数が指定されない場合は undefined になる
     ...others: T[] // 可変長引数
   ): T {
     // 関数の定義でJavaのthrowsのようなものは存在しない
-    return arg1;
+    return arg1
   }
   // 型引数は自動的に推論されることもある
   exampleFunction(1) // OK
@@ -394,23 +400,18 @@ console.log("console.logはstringに限らずなんでも出力できます")
   // Falsyなもの以外
   if (
     !(
-      {} // 空オブジェクトはtruthy
-      || [] // 空配列はtruthy
-      || "false" // 空でない文字列なのでtrue
+      (
+        {} || // 空オブジェクトはtruthy
+        [] || // 空配列はtruthy
+        'false' // 空でない文字列なのでtrue
+      )
     )
   ) {
     throw new Error()
   }
   // Falsy: 条件式においてfalseとみなせるもの
   // 以下のもの
-  if (
-    false
-    || 0
-    || ""
-    || null
-    || undefined
-    || NaN
-  ) {
+  if (false || 0 || '' || null || undefined || NaN) {
     throw new Error()
   }
 
@@ -431,30 +432,33 @@ console.log("console.logはstringに限らずなんでも出力できます")
   const array1: number[] = []
   if (
     !(
-      array1 === array1 // -> true
-      && array1 !== [] // array1 === [] -> false
+      (
+        array1 === array1 && // -> true
+        array1 !== [] // array1 === [] -> false
+      )
     )
-  ) throw new Error()
+  )
+    throw new Error()
 
   // スプレッド演算子...によるシャローコピー
   // array1の key: value の組みをばらばらにして、囲んであげるイメージ
   const array2: number[] = [...array1] // 配列になる
-  const arrayObject = {...array1} // オブジェクトとして扱われる
-  if (array1 === array2) throw new Error
+  const arrayObject = { ...array1 } // オブジェクトとして扱われる
+  if (array1 === array2) throw new Error()
   // こんな使い方もできる
   const oneToNine = [...[1, 2, 3], ...[4, 5, 6], 7, 8, 9]
-  const data = { date: new Date(), place: "Tokyo" }
+  const data = { date: new Date(), place: 'Tokyo' }
   const extendedData = {
     ...data,
-    name: "Bob",
+    name: 'Bob',
     age: 20,
-    place: "London" // 後から書くと上書きできる
+    place: 'London' // 後から書くと上書きできる
   }
 
   // ?.によるアクセス
   // undefined または null のときは、それ以降は評価せずにundefinedを返す
   interface A {
-    a?: A,
+    a?: A
     result: number
   }
   const a: A = { a: { result: 2 }, result: 1 }
@@ -466,15 +470,16 @@ console.log("console.logはstringに限らずなんでも出力できます")
 -* -------------------------------------------------- */
 {
   function registerHandler(
-    handler: (arg: { userID: string, count: number }) => void
-  ): { success: boolean, id: string } {
+    handler: (arg: { userID: string; count: number }) => void
+  ): { success: boolean; id: string } {
     const success = true
-    const id = "aaaa"
+    const id = 'aaaa'
     return { success, id } // keyと変数名が同じ場合は省略できる
     // return { success: success, id: id }
   }
   // successのみを取り出して、変数sに代入
-  const { success: s } = registerHandler(({ userID }) => { // 引数のuserIDのみを取り出した
+  const { success: s } = registerHandler(({ userID }) => {
+    // 引数のuserIDのみを取り出した
     console.log(userID)
   })
   console.log(s)
@@ -499,17 +504,21 @@ console.log("console.logはstringに限らずなんでも出力できます")
   array.shift() // -> 0; [1, 2, 3]
   array.sort().reverse() // [3, 2, 1]
   // 代表的なimmutableなメソッド 元の配列はそのまま
-  array.concat([0, -1]).map((num) => num * 2).filter((num) => num <= 5).forEach((num) => console.log(num))
+  array
+    .concat([0, -1])
+    .map((num) => num * 2)
+    .filter((num) => num <= 5)
+    .forEach((num) => console.log(num))
   const and = array.every((num) => num > 0) // 各要素についての &&
   const or = array.some((num) => num > 0) // 各要素についての &&
   const include = array.includes(0)
 
-  // Map<Key, Value>型 値の対応 
+  // Map<Key, Value>型 値の対応
   const map = new Map<string, number>()
   const size1 = map.size
-  map.set("a", 1).set("b", 2).set("c", 3)
-  const one = map.get("a")
-  map.delete("a")
+  map.set('a', 1).set('b', 2).set('c', 3)
+  const one = map.get('a')
+  map.delete('a')
   map.forEach((value, key) => console.log(`${key}: ${value}`))
   map.clear()
   const keys = [...map.keys()] // keyの配列
@@ -530,7 +539,7 @@ console.log("console.logはstringに限らずなんでも出力できます")
   const readonlyArray: ReadonlyArray<number> = array
   const readonlyMap: ReadonlyMap<string, number> = map
   const readonlySet: ReadonlySet<number> = set
-  readonlyMap.get("c") // OK
+  readonlyMap.get('c') // OK
   // readonlyMap.set("a", 1) // エラー
 
   // 拡張for文 for-of
@@ -546,9 +555,9 @@ console.log("console.logはstringに限らずなんでも出力できます")
 -* -------------------------------------------------- */
 {
   const counts: { [name: string]: number } = {}
-  counts["apple"] = 5
-  counts["banana"] = 2
-  counts["chocolate"] = 9
+  counts.apple = 5
+  counts.banana = 2
+  counts.chocolate = 9
 
   // Object.keys(object), Object.values(object) でkeyやvalueの配列が得られる
   const keys = Object.keys(counts) // ["apple", "banana", "chocolate"]
@@ -556,7 +565,8 @@ console.log("console.logはstringに限らずなんでも出力できます")
   const entries = Object.entries(counts) // [["apple", 5], ["banana", 2], ["chocolate", 9]]
 
   // 拡張for文 for-in
-  for (const key in counts) { // for-in ではobjectのkeyがstringで得られる
+  for (const key in counts) {
+    // for-in ではobjectのkeyがstringで得られる
     keys.includes(key)
   }
 }
@@ -571,46 +581,54 @@ interface Interface {
   readonly readonlyStr: string
   func(): void
 }
-abstract class AbstractClass implements Interface { // 複数のインターフェースの実装は可
+// 複数のインターフェースの実装は可
+abstract class AbstractClass implements Interface {
   public abstract num: number
   public readonly readonlyStr: string
   // コンストラクタ
   protected constructor(readonlyStr: string) {
     // コンストラクタ内でreadonlyな変数を初期化してもよい
-    this.readonlyStr = readonlyStr;
+    this.readonlyStr = readonlyStr
   }
+
   public func(): void {
-    console.log("super method")
+    console.log('super method')
   }
+
   protected abstract protectedFunc(): number
 }
-class ConcreteClass extends AbstractClass { // 実装できるクラスは1つまで
-  private _num: number = 0
+// 継承できるクラスは1つまで
+class ConcreteClass extends AbstractClass {
+  private _num = 0
   private constructor(readonlyStr: string) {
     super(readonlyStr)
   }
+
   // getter専用の書き方
   public get num(): number {
-    console.log("get num")
+    console.log('get num')
     return this._num // thisは省略不可
   }
+
   // setter専用の書き方
   public set num(newValue: number) {
     this._num = newValue
-    console.log("set num")
+    console.log('set num')
   }
+
   public func(a?: number): void {
     super.func()
   }
+
   protected protectedFunc(): number {
     this.num = 1 // setterが呼ばれる
     return this.num // getterが呼ばれる
   }
 
   // singleton
-  private static readonly class: ConcreteClass = new ConcreteClass("single")
+  private static readonly class: ConcreteClass = new ConcreteClass('single')
   public static getConcreteClass(): ConcreteClass {
-    return this.class;
+    return this.class
   }
 }
 const instance = ConcreteClass.getConcreteClass()
@@ -622,7 +640,7 @@ if (!(instance instanceof ConcreteClass)) throw new Error()
 // 列挙型もあるけど、型でいろいろしたい場合に扱いづらい
 enum MyEnum {
   A = 1,
-  B = "b",
+  B = 'b',
   C = 10
 }
 const one = MyEnum.A // 入っている実際の値は1
@@ -630,10 +648,10 @@ const enumIdentity = (e: MyEnum) => e
 enumIdentity(MyEnum.A)
 
 // TypeScriptならenumを使うよりも文字列の|で表してもいい
-type EventType = "onMouseClicked" | "onWindowLoaded" | "onWindowClosed"
+type EventType = 'onMouseClicked' | 'onWindowLoaded' | 'onWindowClosed'
 const eventHandlerMap = new Map<EventType, () => void>()
 // EventTypeの補完が効く
-eventHandlerMap.set("onMouseClicked", () => console.log("mouse click!"))
+eventHandlerMap.set('onMouseClicked', () => console.log('mouse click!'))
 /* -------------------------------------------------- *-
  |  importとexport
 -* -------------------------------------------------- */
@@ -641,9 +659,9 @@ eventHandlerMap.set("onMouseClicked", () => console.log("mouse click!"))
 export interface MainInterface {}
 export class MainClass {}
 export enum MainEnum {}
-export type MainType = "Main"
+export type MainType = 'Main'
 export function mainFunction(): void {}
-export const mainConstant = "Main"
+export const mainConstant = 'Main'
 // ファイルごとに1回だけdefault exportができる importの仕方が変わる
 export default class Main {}
 // import方法はimporter.tsを参照
@@ -653,8 +671,8 @@ export default class Main {}
 {
   try {
     // Error JavaScriptでもともと用意してあるもの
-    if (0) throw new Error("description")
-    if ("") throw 1000
+    if (0) throw new Error('description')
+    if ('') throw 1000
   } catch (e: unknown) {
     console.error(e)
   }
@@ -669,24 +687,27 @@ export default class Main {}
     return new Promise<string>((resolve, reject) => {
       if (0) {
         // エラーがあったとき
-        reject("Something is wrong!!!")
+        reject('Something is wrong!!!')
       }
       setTimeout(() => {
         // 1秒後、resolveに"DONE"を入れて終了
-        resolve("DONE!")
+        resolve('DONE!')
       }, 1000)
-    }).then((message) => {
-      // resolveが呼ばれたとき
-      console.log(`resolved: ${message}`)
-      return 0
-    }).catch((errorMessage) => {
-      // rejectが呼ばれたとき
-      console.log(`rejected: ${errorMessage}`)
-      return 1
-    }).finally(() => {
-      // 共通して実行される
-      console.log(`finalize promise`)
     })
+      .then((message) => {
+        // resolveが呼ばれたとき
+        console.log(`resolved: ${message}`)
+        return 0
+      })
+      .catch((errorMessage) => {
+        // rejectが呼ばれたとき
+        console.log(`rejected: ${errorMessage}`)
+        return 1
+      })
+      .finally(() => {
+        // 共通して実行される
+        console.log(`finalize promise`)
+      })
   }
 
   // ネストが深くならないように async - awaitが用意されている
@@ -717,16 +738,16 @@ export default class Main {}
     a: 1,
     b: 2,
     c: 3,
-    d: { e: "this is not readonly" }
+    d: { e: 'this is not readonly' }
   }
   // abcde.a = 10 // エラー
   // abcde.d = { e: "" } // エラー
-  abcde1.d.e = "" // エラーにならない
+  abcde1.d.e = '' // エラーにならない
 
   // 再帰的にやりたい場合
   type RecursiveReadonly<T> = {
-    readonly [P in keyof T]: RecursiveReadonly<T[P]>;
-  };
+    readonly [P in keyof T]: RecursiveReadonly<T[P]>
+  }
   type RecursiveReadonlyABCDE = RecursiveReadonly<ABCDE>
   const abcde2: RecursiveReadonlyABCDE = abcde1
   // abcde2.d.e = "" // エラー

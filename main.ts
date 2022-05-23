@@ -579,11 +579,14 @@ console.log('console.logはstringに限らずなんでも出力できます')
 // 何もつけないと public になる
 interface Interface {
   num: number
-  readonly readonlyStr: string
   func(): void
 }
+// interfaceの拡張
+interface ExtendedInterface extends Interface {
+  readonly readonlyStr: string
+}
 // 複数のインターフェースの実装は可
-abstract class AbstractClass implements Interface {
+abstract class AbstractClass implements ExtendedInterface {
   public abstract num: number
   public readonly readonlyStr: string
   // コンストラクタ

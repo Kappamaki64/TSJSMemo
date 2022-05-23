@@ -188,10 +188,11 @@ console.log('console.logはstringに限らずなんでも出力できます')
   }
 
   // 型パラメータ <TypeName1, TypeName2, ...>
-  const identity1: <T>(a: T) => T = arg => arg
-  const identity2: <T>(a: T) => T = (arg) => {
+  const identity1: <T>(a: T) => T = <U>(arg: U): U => {
     return arg
   }
+  // 推論できる部分は書かなくてもいい
+  const identity2: <T>(a: T) => T = arg => arg // 値の引数や返り値の型を省略
 }
 /* -------------------------------------------------- *-
  |  タプル型 [string, number]
@@ -322,8 +323,8 @@ console.log('console.logはstringに限らずなんでも出力できます')
   })(a) // ラムダ関数を引数aで呼び出す bでも可
 
   // T & U で拡張するような型ができる TでありUであるもの
-  type AAndB = A & { x: number }
-  ;((arg: AAndB) => {
+  type AAndX = A & { x: number }
+  ;((arg: AAndX) => {
     // 全部持っている
     const type = arg.type
     const a = arg.a

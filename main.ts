@@ -511,7 +511,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
     .filter((num) => num <= 5)
     .forEach((num) => console.log(num))
   const and = array.every((num) => num > 0) // 各要素についての &&
-  const or = array.some((num) => num > 0) // 各要素についての &&
+  const or = array.some((num) => num > 0) // 各要素についての ||
   const include = array.includes(0)
 
   // Map<Key, Value>型 値の対応

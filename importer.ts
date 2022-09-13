@@ -18,4 +18,4 @@ const d: MainType = 'Main'
 const e = mainFunction()
 const f = constant
 
-const defaultExported = new Main()
+const defaultExportedSettings = Main.settings

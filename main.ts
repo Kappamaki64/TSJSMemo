@@ -30,6 +30,7 @@
 
 // 出力
 console.log('console.logはstringに限らずなんでも出力できます')
+console.log("ダブルクォーテーションでも可 中に'シングルクォーテーション'を入れたりもできる"); // 末尾のセミコロンは基本的にはあってもなくてもいい
 // ブラウザのコンソールで出力すると、値の中身をわかりやすく表現してくれます
 
 /* -------------------------------------------------- *-
@@ -45,7 +46,15 @@ console.log('console.logはstringに限らずなんでも出力できます')
   let noInitialize // OK 参照するとundefinedという値が返る
 
   var dangerousVariable // スコープや仕様が難しいので絶対に避ける
+
+  // a = 1 // strict mode（.jsのソースコードの先頭に'use strict;'と書く）でない場合は可能
+  // ただしグローバルオブジェクト（globalThis）への値設定という特殊な意味を持つので避ける
+  // globalThisはconsoleなど唐突にどこでも使える変数を持つ特殊なobject（objectについては後述）
 }
+// {} でブロックを作ることができる
+// ブロック内の const や let で宣言された変数はブロックの外では使えない
+// このファイルでは変数名の重複を避けるために使用
+
 /* -------------------------------------------------- *-
  |  JavaScriptの値の種類 string, number, bigint, boolean, symbol, undefined, object, function
 -* -------------------------------------------------- */
@@ -98,7 +107,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
   const id = 1
   object[id] = 'element1' // object[number] または object["keyName"] でもアクセスできる
   object[3] = 'element3' // key: value の追加 存在しないkeyを指定して代入する
-  delete object[3] // key: value の削除 delete object[keyName]
+  delete object[3] // key: value の削除 delete object["keyName"]
 
   // typeofによって、変数の値の種類の名前がstringで得られる
   typeof undefinedVariable // -> "undefined"
@@ -150,7 +159,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
 
   // interfaceによるオブジェクトの型宣言
   // JavaScriptにはinterfaceは存在しない、TypeScriptの機能
-  // オブジェクト指向のinterfaceというよりも、ただの構造体としてよく使う
+  // オブジェクト指向のinterfaceというよりも、ただの構造体の型としてよく使う
   interface InterfaceA {
     a: string
     b?: number
@@ -216,7 +225,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
 {
   // ありえない場合はnever型
   function f(str?: string): number {
-    switch (typeof str) {
+    switch (typeof str) { // typeofで得られた文字列で型推論できる TypeGuard タイプガード の1つ
       case 'undefined':
         return 0 // strはundefined型
       case 'string':
@@ -231,7 +240,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
   const g = () => {
     throw new Error()
   }
-  const po = g() // gの返り値はnever型
+  const po = g() // gの返り値はnever型 返り値が発生することはありえないので
 }
 /* -------------------------------------------------- *-
  |  なんでも型 any, unknown
@@ -265,14 +274,14 @@ console.log('console.logはstringに限らずなんでも出力できます')
   // キャストして型を変えることができる
   const number = 1
   const string: string = number as unknown as string // 抜け道
-  // ライブラリの返り値の型がおかしいときなど、どうしようもないときに使う
+  // ライブラリの関数の返り値の型がおかしいときなど、どうしようもないときに使う
 }
 /* -------------------------------------------------- *-
  |  型定義 type, interface
 -* -------------------------------------------------- */
 {
   // TypeScriptで型を自分で作る方法
-  // JavaScriptは型がないので、JavaScriptの変換すると型定義のコードはなくなる
+  // JavaScriptは型がないので、JavaScriptに変換すると型定義のコードはなくなる
 
   // type 型名 = 型 で自分で型を定義できる
   type Pair<T, U> = [T, U]
@@ -311,8 +320,8 @@ console.log('console.logはstringに限らずなんでも出力できます')
     // typeは "a" | "b" 型
     const type = arg.type
     // A または B なので、まだ共通するtypeしか取得できない
-    // const a = arg.a
-    // const b = arg.b
+    // const a = arg.a // NG
+    // const b = arg.b // NG
     if (type === 'a') {
       // argは A 型（TypeGuard タイプガード）
       const a = arg.a // aが取得できるようになった
@@ -320,7 +329,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
     }
     // returnしたので、argは B 型
     const b = arg.b // bが取得できるようになった
-  })(a) // ラムダ関数を引数aで呼び出す bでも可
+  })(a) // ラムダ式で作った関数を引数aで呼び出す bでも可
 
   // T & U で拡張するような型ができる TでありUであるもの
   type AAndX = A & { x: number }
@@ -350,7 +359,7 @@ console.log('console.logはstringに限らずなんでも出力できます')
     const length = o.length // この中ではoは配列
   }
 
-  // 型記述で typeof 値 を書くと、値の型が得られる
+  // 型記述で typeof 値 を書くと、値の型が得られる（値を記述する際のtypeofとの混同に注意）
   const user1 = { id: 0, name: 'user' }
   type User = typeof user1
 
@@ -386,11 +395,11 @@ console.log('console.logはstringに限らずなんでも出力できます')
     // 関数の定義でJavaのthrowsのようなものは存在しない
     return arg1
   }
-  // 自動的に推論できる場合は型引数を書かなくてもいい
+  // 自動的に推論できる場合は呼び出し時の型引数を書かなくてもいい
   exampleFunction(1) // OK
 }
 /* -------------------------------------------------- *-
- |  演算子（JSの話） 割り算 比較演算子 スプレッド演算子... オプショナルチェーン?.
+ |  演算子（JSの話） 割り算 比較演算子 スプレッド演算子... オプショナルチェーン?. Null合体演算子??
 -* -------------------------------------------------- */
 {
   // numberしかないので、整数同士の割り算は小数になる
@@ -465,6 +474,20 @@ console.log('console.logはstringに限らずなんでも出力できます')
   const a: A = { a: { result: 2 }, result: 1 }
   // const result1 = a.a.a.a.a.a.result // 実行時にundefined.aの参照エラーになる
   const result2 = a?.a?.a?.a?.a?.a?.result // undefinedが返る
+
+  // ??によるnullやundefinedの回避
+  // undefined または null のときは、??以降を評価した値を返す
+  function getValueOrNull(v: number): number | null {
+    return v > 0 ? v : null
+  }
+  const defaultValue = 10
+  const value1 = getValueOrNull(1234) ?? defaultValue // value1はnumber型
+  // 以下の処理を1行で書けて嬉しい
+  let value2 = getValueOrNull(1234) // value2はnumber | null型
+  if (value2 === null) {
+    value2 = defaultValue
+  }
+  const po = value2 // 残念ながらvalue2は相変わらずnumber | null型
 }
 /* -------------------------------------------------- *-
  |  分割代入など
@@ -574,19 +597,22 @@ console.log('console.logはstringに限らずなんでも出力できます')
 /* -------------------------------------------------- *-
  |  class
 -* -------------------------------------------------- */
-// interfaceやclassには可視性やreadonlyはつけない
-// メンバ変数やメソッドの可視性は public, protected, private のみ（packageの概念は存在しない）
+// interfaceやclassには可視性修飾子やreadonlyはつけない
+// メンバ変数やメソッドの可視性修飾子は public, protected, private のみ（packageの概念は存在しない）
 // 何もつけないと public になる
-interface Interface {
+interface InterfaceA {
   num: number
   func(): void
 }
 // interfaceの拡張
-interface ExtendedInterface extends Interface {
+interface ExtendedInterfaceA extends InterfaceA {
   readonly readonlyStr: string
 }
-// 複数のインターフェースの実装は可
-abstract class AbstractClass implements ExtendedInterface {
+interface InterfaceB {
+  func<T>(arg: T): T
+}
+// 複数のインターフェースの実装はOK
+abstract class AbstractClass implements ExtendedInterfaceA, InterfaceB {
   public abstract num: number
   public readonly readonlyStr: string
   // コンストラクタ
@@ -595,8 +621,12 @@ abstract class AbstractClass implements ExtendedInterface {
     this.readonlyStr = readonlyStr
   }
 
-  public func(): void {
+  // オーバーロードする際は、対応するシグネチャを列挙して、それらを全てに対応したものを実装する
+  public func(): void
+  public func<T>(arg: T): T
+  public func<T>(...args: T[]): T | void {
     console.log('super method')
+    if (args.length === 1) return args[0]
   }
 
   protected abstract protectedFunc(): number
@@ -648,8 +678,12 @@ enum MyEnum {
   C = 10
 }
 const one = MyEnum.A // 入っている実際の値は1
-const enumIdentity = (e: MyEnum) => e
-enumIdentity(MyEnum.A)
+const enumAIdentity = (a: MyEnum.A) => a
+enumAIdentity(MyEnum.A)
+enumAIdentity(1)
+enumAIdentity(2) // できてしまう よくない
+type MyEnumKeys = keyof typeof MyEnum // "A" | "B" | "C" になる MyEnumは値として見れる
+type MyEnumValues = typeof MyEnum[MyEnumKeys] // MyEnumに戻った
 
 // TypeScriptならenumを使うよりも文字列の|で表してもいい
 type EventType = 'onMouseClicked' | 'onWindowLoaded' | 'onWindowClosed'
@@ -667,7 +701,13 @@ export type MainType = 'Main'
 export function mainFunction(): void {}
 export const mainConstant = 'Main'
 // ファイルごとに1回だけdefault exportができる importの仕方が変わる
-export default class Main {}
+export default { // 名前をつけなくてもいい
+  mainConstant,
+  mainFunction,
+  settings: {
+    settingA: true
+  }
+}
 // import方法はimporter.tsを参照
 /* -------------------------------------------------- *-
  |  エラー throw new Error()
